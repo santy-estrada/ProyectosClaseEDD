@@ -407,5 +407,26 @@ public class Empresa {
 		
 	}
 	
+	public Pieza getPiezaVIP() throws EMaxCero, ENotFound, ENoPiezas {
+		int [] cantVendidaPieza = cantVendidaPieza();
+		int max = 0;
+		int maxIn = 0;
+		for(int i = 0; i < cantVendidaPieza.length; i++) {
+			if(max < cantVendidaPieza[i]) {
+				max =  cantVendidaPieza[i];
+				maxIn = i;
+			}
+		}
+		
+		if(max == 0) {throw new EMaxCero();}
+		
+		return piezas[maxIn];
+		
+	}
+	/*
+	public Pieza[] getPiezasVIP() {
+		
+	}*/
+	
 	
 }
