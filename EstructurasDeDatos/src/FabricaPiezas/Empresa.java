@@ -371,13 +371,24 @@ public class Empresa {
 		return costo;
 	}
 	
-	public Cliente getVIP() {
-		Cliente vip = clientes[0];
+	
+	public Cliente getVIP() throws ENoClients, EMaxCero{
 		
-		for(Cliente c: clientes) {
-			if(c.getCostoTotal() > vip.getCostoTotal()) {
-				vip = c;
+		Cliente vip = null;
+		
+		if(clientes.length != 0) {
+			vip = clientes[0];
+			for(Cliente c: clientes) {
+				if(c.getCostoTotal() > vip.getCostoTotal()) {
+					vip = c;
+				}
 			}
+			
+			if(vip.getCostoTotal() == 0) {
+				throw new EMaxCero();
+			}
+		}else {
+			throw new ENoClients();
 		}
 		
 		return vip;
