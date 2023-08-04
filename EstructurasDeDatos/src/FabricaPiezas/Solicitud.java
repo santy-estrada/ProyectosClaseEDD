@@ -26,10 +26,13 @@ public class Solicitud {
 		return codigo;
 	}
 	
-	public Pieza getCodigoPieza() {
-		return pieza;
+	public String getCodigoPieza() {
+		return pieza.getCodigo();
 	}
 	
+	public Pieza getPieza() {
+		return pieza;
+	}
 	
 	public Date getFechaSolicitud() {
 		return fechaSolicitud;

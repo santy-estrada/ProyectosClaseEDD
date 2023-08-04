@@ -92,7 +92,8 @@ public class MainFabricaPiezas {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		}	//Nuevo vip
-		/*
+		
+		
 		//costos de cada pieza
 		System.out.println(e.getCostoPieza("hjk"));
 		System.out.println(e.getCostoPieza("abc"));
@@ -125,10 +126,39 @@ public class MainFabricaPiezas {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		}	//Saca vip
-
+		
+	
+		//Get cantidad de pizas
+		try {
+			for(int i: e.cantVendidaPieza()) {
+				System.out.println(i);
+			}
+		} catch (ENotFound e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}catch (ENoPiezas e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}
+		System.out.println("---------------");
+		
 		e.modSolicitud("##1","" , "hjk", 3);	//Modifica la pieza y unidades de la solicitud 1
-		System.out.println(e.getCostoCliente("123"));	//Actualización de cobro
+		//System.out.println(e.getCostoCliente("123"));	//Actualización de cobro
 		System.out.println();
+		
+		//Get cantidad de pizas
+		try {
+			for(int i: e.cantVendidaPieza()) {
+				System.out.println(i);
+			}
+		} catch (ENotFound e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}catch (ENoPiezas e1) {
+			// TODO Auto-generated catch block
+			System.out.println(e1.getMessage());
+		}
+		/*
 
 		try {
 			System.out.println("VIP: " + e.getVIP().getCodigo());
@@ -154,6 +184,7 @@ public class MainFabricaPiezas {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		}	//Nuevo vip
+		
 		
 		e.delPieza("hjk");	//Borrar una pieza
 		

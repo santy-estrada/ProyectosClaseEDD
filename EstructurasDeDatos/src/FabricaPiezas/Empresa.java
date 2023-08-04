@@ -374,24 +374,36 @@ public class Empresa {
 	
 	public Cliente getVIP() throws ENoClients, EMaxCero{
 		
-		Cliente vip = null;
+		if(clientes == null || clientes.length == 0) {throw new ENoClients();}
 		
-		if(clientes.length != 0) {
-			vip = clientes[0];
-			for(Cliente c: clientes) {
-				if(c.getCostoTotal() > vip.getCostoTotal()) {
-					vip = c;
-				}
+		Cliente vip = clientes[0];
+		
+		for(Cliente c: clientes) {
+			if(c.getCostoTotal() > vip.getCostoTotal()) {
+				vip = c;
 			}
-			
-			if(vip.getCostoTotal() == 0) {
-				throw new EMaxCero();
-			}
-		}else {
-			throw new ENoClients();
 		}
 		
+		if(vip.getCostoTotal() == 0) {throw new EMaxCero();}
+		
 		return vip;
+		
+	}
+	
+	public int[] cantVendidaPieza() throws ENotFound, ENoPiezas {
+		
+		if(piezas.length == 0) {throw new ENoPiezas();}
+		
+		int cantVendidaPieza[] = new int[piezas.length];
+		
+		for(Cliente c: clientes) {
+			for(Solicitud s: c.getSolicitudes()) {
+				int indexP = searchPieza(s.getCodigoPieza());
+				cantVendidaPieza[indexP] += s.getCantidadFabricar();
+			}
+		}
+		
+		return cantVendidaPieza;
 		
 	}
 	
