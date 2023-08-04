@@ -375,7 +375,7 @@ public class Empresa {
 		Cliente vip = clientes[0];
 		
 		for(Cliente c: clientes) {
-			if(getCostoCliente(c.getCodigo()) > getCostoCliente(vip.getCodigo())) {
+			if(c.getCostoTotal() > vip.getCostoTotal()) {
 				vip = c;
 			}
 		}
