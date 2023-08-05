@@ -372,7 +372,7 @@ public class Empresa {
 	}
 	
 	
-	public Cliente getVIP() throws ENoClients, EMaxCero{
+	private Cliente getVIP() throws ENoClients, EMaxCero{
 		
 		if(clientes == null || clientes.length == 0) {throw new ENoClients();}
 		
@@ -388,6 +388,19 @@ public class Empresa {
 		
 		return vip;
 		
+	}
+	
+	public Cliente[] getVIPs() throws ENoClients, EMaxCero {
+		double costoVIP = getVIP().getCostoTotal();
+		Cliente[] vips = new Cliente[0];
+		for(Cliente c: clientes) {
+			if(costoVIP == c.getCostoTotal()) {
+				vips = Arrays.copyOf(vips, vips.length+1);
+				vips[vips.length-1]=c;
+			}
+		}
+		
+		return vips;
 	}
 	
 	public int[] cantVendidaPieza() throws ENotFound, ENoPiezas {
@@ -407,26 +420,37 @@ public class Empresa {
 		
 	}
 	
-	public Pieza getPiezaVIP() throws EMaxCero, ENotFound, ENoPiezas {
+	private int cantidadVIP() throws EMaxCero, ENotFound, ENoPiezas {
 		int [] cantVendidaPieza = cantVendidaPieza();
 		int max = 0;
-		int maxIn = 0;
-		for(int i = 0; i < cantVendidaPieza.length; i++) {
-			if(max < cantVendidaPieza[i]) {
-				max =  cantVendidaPieza[i];
-				maxIn = i;
+		for(int i : cantVendidaPieza) {
+			if(max < i) {
+				max =  i;
 			}
 		}
 		
 		if(max == 0) {throw new EMaxCero();}
 		
-		return piezas[maxIn];
+		return max;
 		
 	}
-	/*
-	public Pieza[] getPiezasVIP() {
+	
+	
+	public Pieza[] getPiezasVIP() throws EMaxCero, ENotFound, ENoPiezas {
+		Pieza vips[] = new Pieza[0];
+		int maxCant = cantidadVIP();
+		int cantidadesVendidas[] = cantVendidaPieza();
 		
-	}*/
+		for(int i =0; i< cantidadesVendidas.length; i++) {
+			if(cantidadesVendidas[i] == maxCant) {
+				vips = Arrays.copyOf(vips, vips.length+1);
+				vips[vips.length-1] = piezas[i];
+			}
+		}
+		
+		return vips;
+		
+	}
 	
 	
 }

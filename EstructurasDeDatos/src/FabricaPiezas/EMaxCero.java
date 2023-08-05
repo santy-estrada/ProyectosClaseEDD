@@ -3,6 +3,6 @@ package FabricaPiezas;
 public class EMaxCero extends Exception{
 
 	public EMaxCero() {
-		super("Ningún cliente tiene solicitudes");
+		super("Se está obteniendo un cero como máximo");
 	}
 }

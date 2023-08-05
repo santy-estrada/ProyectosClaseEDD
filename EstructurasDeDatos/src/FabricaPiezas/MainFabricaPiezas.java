@@ -69,14 +69,17 @@ public class MainFabricaPiezas {
 		e.addPieza('i', 17.2, "pqr", "detodo", piezas);
 		
 		try {
-			System.out.println("VIP: " + e.getVIP().getCodigo());
+			Cliente vips[] = e.getVIPs();
+			for(Cliente c: vips) {
+				System.out.println("VIP: " + c.getCodigo());
+			}
 		} catch (ENoClients e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		} catch (EMaxCero e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
-		}	//Nuevo vip
+		}	//vip inexistente
 		
 		//añadir clientes
 		e.addCliente("pqk", "cll 36", "carros sas", "carros@hotmail.com", FormaDePago.valueOf("CO"));
@@ -84,14 +87,17 @@ public class MainFabricaPiezas {
 		e.addCliente("789", "cll 00", "Vcis sas", "vcis.com", FormaDePago.valueOf("CC"));
 
 		try {
-			System.out.println("VIP: " + e.getVIP().getCodigo());
+			Cliente vips[] = e.getVIPs();
+			for(Cliente c: vips) {
+				System.out.println("VIP: " + c.getCodigo());
+			}
 		} catch (ENoClients e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		} catch (EMaxCero e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
-		}	//Nuevo vip
+		}	//Nuevo vip	
 		
 		
 		//costos de cada pieza
@@ -101,10 +107,16 @@ public class MainFabricaPiezas {
 		System.out.println();
 		
 		//Crear solicitud
-		e.crearSolicitud("123", "##1", "pqr", 13);
+		
+		//SOLICITUDES PRUEBA VARIOS VIP
+		e.crearSolicitud("123", "##1", "pqr", 10);
+		e.crearSolicitud("pqk", "##2", "pqr", 10);
+
+		/* SOLICITUDES PRUEBA
+		e.crearSolicitud("123", "##1", "pqr", 10);
 		System.out.println(e.getCostoCliente("123"));	//Lo q paga el cliente
 		//Otra solicitud
-		e.crearSolicitud("123", "##2", "abc", 1);
+		e.crearSolicitud("123", "##2", "abc", 7);
 		
 		System.out.println(e.getCostoCliente("123"));	//Actualización de cobro
 		e.crearSolicitud("123", "##4", "abc", -1);	//Solicitud imposible (cantidad <0)
@@ -112,25 +124,29 @@ public class MainFabricaPiezas {
 
 		System.out.println(e.getCostoCliente("123"));	//No hay cambio de cobro
 		
-		e.crearSolicitud("pqk", "##3", "hjk", 12);		//Nueva solicitud a otro cliente
+		e.crearSolicitud("pqk", "##3", "hjk", 10);		//Nueva solicitud a otro cliente
 		System.out.println(e.getCostoCliente("pqk"));	//Su costo
-
+		 */
 		System.out.println();
 
 		try {
-			System.out.println("VIP: " + e.getVIP().getCodigo());
+			Cliente vips[] = e.getVIPs();
+			for(Cliente c: vips) {
+				System.out.println("VIP: " + c.getCodigo());
+			}
 		} catch (ENoClients e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		} catch (EMaxCero e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
-		}	//Saca vip
+		}	//Nuevo vip
 		
 	
 		//Get cantidad de pizas
 		try {
-			for(int i: e.cantVendidaPieza()) {
+			int [] cantVendidas = e.cantVendidaPieza();
+			for(int i: cantVendidas) {
 				System.out.println(i);
 			}
 		} catch (ENotFound e1) {
@@ -142,7 +158,10 @@ public class MainFabricaPiezas {
 		}
 		//Get pieza más vendida
 		try {
-			System.out.println(e.getPiezaVIP().getCodigo());
+			Pieza vips[] = e.getPiezasVIP();
+			for(Pieza p:vips) {
+				System.out.println(p.getCodigo());
+			}
 		} catch (EMaxCero e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
@@ -161,7 +180,8 @@ public class MainFabricaPiezas {
 		
 		//Get cantidad de piezas vendidas
 		try {
-			for(int i: e.cantVendidaPieza()) {
+			int []cantVendidas = e.cantVendidaPieza();
+			for(int i: cantVendidas) {
 				System.out.println(i);
 			}
 		} catch (ENotFound e1) {
@@ -174,7 +194,10 @@ public class MainFabricaPiezas {
 		
 		//Get pieza más vendida
 		try {
-			System.out.println(e.getPiezaVIP().getCodigo());
+			Pieza vips[] = e.getPiezasVIP();
+			for(Pieza p:vips) {
+				System.out.println(p.getCodigo());
+			}
 		} catch (EMaxCero e1) {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
@@ -185,6 +208,8 @@ public class MainFabricaPiezas {
 			// TODO Auto-generated catch block
 			System.out.println(e1.getMessage());
 		}
+		
+		
 		
 		/*
 
