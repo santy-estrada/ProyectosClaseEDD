@@ -14,18 +14,19 @@ public class ReadEstudiantes {
 		estudiantes = readEstudiante();
 	}
 	
+	//Leer de los objetos existentes
 	private Estudiante[] readEstudiante() throws IOException, ClassNotFoundException{
 		File f = new File("C:\\Users\\santy\\git\\ClaseEstructurasDeDatos\\EstructurasDeDatos\\src\\Ficheros\\Estudiantes");
 		FileInputStream fi = null;
 		ObjectInputStream oi = null;
-		File files[] = f.listFiles();
+		File files[] = f.listFiles();		//Arreglo con todos los archivos de la carpeta
 		Estudiante estudiantes[] = new Estudiante[0];
 		
 		for(int i = 0; i < files.length; i++) {
 			fi = new FileInputStream(files[i].getPath());
 			oi = new ObjectInputStream(fi);
 			estudiantes = Arrays.copyOf(estudiantes, estudiantes.length+1);
-			estudiantes[i] = (Estudiante) oi.readObject();
+			estudiantes[i] = (Estudiante) oi.readObject();	//Se guarda el estudiante
 		}
 		
 		if(fi != null && oi != null) {

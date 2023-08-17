@@ -17,20 +17,15 @@ public class Estudiante implements Serializable {
 		this.nombre = nombre;
 	}
 	
+	//Guardar el estudiante en archivo
 	public void saveEstudiante() throws IOException {
+		//Crea un file con el path que quiero para la carpeta de estudiantes
 		File f = new File("C:\\Users\\santy\\git\\ClaseEstructurasDeDatos\\EstructurasDeDatos\\src\\Ficheros\\Estudiantes");
-		if(!f.exists() && f.mkdir()) {
+		if(f.exists() || (!f.exists() && f.mkdir())) {	// si existe o si no existe y se puede crear
 			FileOutputStream fs = new FileOutputStream( "C:\\Users\\santy\\git\\ClaseEstructurasDeDatos\\EstructurasDeDatos\\src\\Ficheros\\Estudiantes" +"\\"+this.nombre+".javaObj");
 			ObjectOutputStream os= new ObjectOutputStream(fs);
 			
-			os.writeObject(this);
-			os.close();
-			fs.close();
-		}else if(f.exists()) {
-			FileOutputStream fs = new FileOutputStream( "C:\\Users\\santy\\git\\ClaseEstructurasDeDatos\\EstructurasDeDatos\\src\\Ficheros\\Estudiantes" +"\\"+this.nombre+".javaObj");
-			ObjectOutputStream os= new ObjectOutputStream(fs);
-			
-			os.writeObject(this);
+			os.writeObject(this);		//Escriba el objeto con toda la información
 			os.close();
 			fs.close();
 		}
