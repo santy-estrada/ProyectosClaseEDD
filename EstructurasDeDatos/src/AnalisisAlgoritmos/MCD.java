@@ -30,9 +30,9 @@ public class MCD {
 		int cont = 0;
 		for(int i = 1;i<n;i++) {
 			if(i%2 != 0) {
-				cont ++;
+				//cont ++;
 				for(int j = i+1; j<n; j=j+2) {
-					//cont ++;
+					cont ++;
 
 					if(j%2==0) {
 						
@@ -49,7 +49,10 @@ public class MCD {
 		
 		//System.out.println(mcd(17,15265286));
 		//System.out.println(euclides(17,43));
-		System.out.println(fin(17,43,6));
+		for(int i = 0; i < 100; i++) {
+			System.out.println("con N = " + i + ": " +fin(17,43,i));
+
+		}
 
 	
 
