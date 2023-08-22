@@ -3,7 +3,7 @@ package Recursividad;
 public class ArregloYCadenas {
 	
 	private static int maxEnArrays(int a[], int max, int n) {
-		if(a[n] > max) {	//Siempre veerifica si el valor actual es mayor al máximo
+		if(a[n] > max) {	//Siempre verifica si el valor actual es mayor al máximo
 			max = a[n];
 		}
 		
@@ -26,7 +26,7 @@ public class ArregloYCadenas {
 	}
 	
 	private static StringBuffer cambio(StringBuffer s, int a, int b) {
-		if(a == b || b < a) {	//Si están en la misma posición o si a ya sobrepasó b
+		if(a >= b) {	//Si están en la misma posición o si a ya sobrepasó b
 			return s;
 		}else {
 			char aux = s.charAt(a);	//Caracter en la posición a
@@ -51,7 +51,7 @@ public class ArregloYCadenas {
 		
 	}
 	
-	private static boolean palindromo(StringBuffer s, int a, int b) {
+	private static boolean palindromo(String s, int a, int b) {
 		if(a == b || a > b) {
 			return true;	//Si llegó hasta acá, es palíndromo
 		}else {
@@ -71,10 +71,9 @@ public class ArregloYCadenas {
 		}
 		int a = 0;
 		int b = s.length()-1;
+	
 		
-		StringBuffer aux = new StringBuffer(s);
-		
-		return palindromo(aux, a, b);
+		return palindromo(s, a, b);
 		
 		
 	}
