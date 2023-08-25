@@ -2,19 +2,30 @@ package Ficheros;
 import java.io.*;
 import java.util.Arrays;
 
+class correo implements Serializable{
+	private String mail;
+	public correo(String mail) {
+		this.mail = mail;
+	}
+	public String getCorreo() {
+		return mail;
+	}
+	
+}
 public class Estudiante implements Serializable {
 	private static int num;
 	private int id;
 	private String[] materias;
 	private double[][] notas;
 	String nombre;
-	
+	correo c;
 	public Estudiante(String nombre, String[] materias) {
 		num++;
 		this.id = num;
 		this.materias = materias;
 		this.notas = new double[materias.length][];
 		this.nombre = nombre;
+		c = new correo(nombre + "@");
 	}
 	
 	//Guardar el estudiante en archivo
@@ -79,6 +90,7 @@ public class Estudiante implements Serializable {
 			}
 
 			System.out.println("");
+			System.out.println(c.getCorreo());
 		}
 		System.out.println("-----------------");
 	}
