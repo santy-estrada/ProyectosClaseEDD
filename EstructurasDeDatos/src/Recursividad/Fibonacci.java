@@ -1,5 +1,7 @@
 package Recursividad;
 
+import java.math.BigInteger;
+
 public class Fibonacci {
 
 	public static long fibonacciR(int n) {
@@ -21,31 +23,41 @@ public class Fibonacci {
 		return n0;
 	}
 	
-	public static long fibonacciFast(int n) throws EListaVacia {
+	public static long fibonacciFast(long n) throws EListaVacia {
 		if(n < 0) {
 			throw new EListaVacia();
 		}
+		
+		int actual = (n==0)? 0:1;
 
-		return fibonacciBueno(n, 0, 1);
+		return fibonacciBueno(n, 0, actual);
 		//Pasa primer valor como 0 y segundo como 1 por definición matemática
 	}
 	
-	private static long fibonacciBueno(int n, int anterior, int actual) {
-		if (n == 1) {
+	private static long fibonacciBueno(long n, long anterior, long actual) {
+		if (n <= 1) {
 			return actual;	//devuelve el actual si se llega al 1
 			//Este caso será el de parada excepto cuando el primer n sea 0
-		}
-		if(n == 0) {
-			return anterior; //Caso de parada cuando n es 0
-		}		
-	
-		actual += anterior;	//Fibonacci actual es sí mismo más el fibonacci anterior
-		anterior = actual - anterior;
-		//Fibonacci anterior es el nuevo actual menos sí mismo
+		}	
 		
-		return fibonacciBueno(n-1, anterior, actual);
+		//El próximo anterior es el actual y el próximo actual es la suma de anterior y actual
+		return fibonacciBueno(n-1, actual, anterior+actual);
 		//Se repite el ciclo pasando n-1
 		
+	}
+	
+	public static BigInteger fibonacciFast3 (int n) {
+		int actual = (n ==0)? 0:1;
+		
+		return fibonacciR3(n, new BigInteger("0"), new BigInteger(Integer.toString(actual)));
+	}
+	
+	private static BigInteger fibonacciR3(int n, BigInteger anterior, BigInteger  actual) {
+		if(n <= 1) {
+			return actual;
+		}
+		//Anterior es el actual y actual es anterior más actual
+		return fibonacciR3(n-1, actual, new BigInteger(actual.toString()).add(anterior));
 	}
 	
 	public static void main(String[] args) {
@@ -71,6 +83,11 @@ public class Fibonacci {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		t1 = System.currentTimeMillis();
+		System.out.println(fibonacciFast3(500));
+		t2 = System.currentTimeMillis();
+		System.out.println("Tiempo BigInteger: " + (t2-t1));
 	}
 
 }
