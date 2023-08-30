@@ -49,7 +49,6 @@ public class SumaMatriz {
 		
 		return matriz[i][j] + sumaMitIndex(matriz, i+1, j, totalSum);
 		
-		
 	}
 
 	public static void main(String[] args) {
