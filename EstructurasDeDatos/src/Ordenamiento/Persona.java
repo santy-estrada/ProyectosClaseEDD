@@ -68,9 +68,15 @@ public class Persona implements Comparable<Persona>{
 		
 		Persona personas[] = {p1,p2,p3,p4,p5,p6, p7};
 		
-		Ordenamiento.selectionSort(personas);
+		try {
+			Ordenamiento.selectionSort(personas);
+			Ordenamiento.printLista(personas);
+
+		} catch (EListaVacia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		Ordenamiento.printLista(personas);
 
 	}
 	
