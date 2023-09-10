@@ -5,24 +5,21 @@ import java.util.Stack;
 
 public class Decodificar {
 	public static String decodificar(String s) {
-		Character[] chars = charToCharacter(s.toCharArray());
-		String mensaje1 = invert(generateStack(chars));	//Se inviritió todo
-		
+		String mensaje1 = invert(s);	//Se inviritió todo
 		String mensaje = pedacitos(mensaje1);
 		
 		return mensaje;
 	}
 	
 	public static String codificar(String s) {
-		String mensaje1 = pedacitos(s);
-		
-		Character[] chars = charToCharacter(mensaje1.toCharArray());
-		
-		String mensaje = invert(generateStack(chars));	//Se inviritió todo
+		String mensaje1 = pedacitos(s);		
+		String mensaje = invert(mensaje1);	//Se inviritió todo
 		
 		
 		return mensaje;
 	}
+	
+	
 	
 	//Invertir cada subcadena de consonantes
 	private static String pedacitos(String mensaje) {
@@ -36,10 +33,8 @@ public class Decodificar {
 			if(vocales.indexOf(mensaje.charAt(indexF)) != -1) {
 				//Toma los caracteres desde la última vocal hasta este caracter
 				aux = mensaje.substring(indexI, indexF);
-				//Cree el arreglo de chars auxiliar
-				Character[] chars = charToCharacter(aux.toCharArray());
 				//Se concatena la respuesta y se adicional la vocal
-				res = res + invert(generateStack(chars)) + mensaje.charAt(indexF);
+				res = res + invert(aux) + mensaje.charAt(indexF);
 				//Se pone el próximo indice de inicio como el caracter después de la vocal
 				indexI = indexF+1;
 			}
@@ -51,9 +46,8 @@ public class Decodificar {
 		if(res.length() < mensaje.length()) {
 			//Tome todos los caracteres desde la última vocal
 			aux = mensaje.substring(indexI);
-			Character[] chars = charToCharacter(aux.toCharArray());
 			//Concatenelos a la respuesta
-			res = res + invert(generateStack(chars));
+			res = res + invert(aux);
 		}
 		
 		return res;
@@ -62,8 +56,9 @@ public class Decodificar {
 	
 	
 	
-	//Dado un arreglo de Character se da un Stack con esos elementos
-	private static Stack<Character> generateStack(Character[] chars){
+	//Dado un String se da un Stack con esos elementos
+	private static Stack<Character> generateStack(String s){
+		Character[] chars = charToCharacter(s.toCharArray());
 		Stack<Character> stc= new Stack<Character>();
 		for(Character c: chars) {
 			stc.push(c);
@@ -87,7 +82,9 @@ public class Decodificar {
 	 * Dado un Stack se da un String con los elementos, resultando en un string donde el primer
 	 * caracter es el último del stack
 	 */
-	private static String invert (Stack<Character> mensaje){
+	private static String invert (String s){
+		
+		Stack<Character> mensaje = generateStack(s);
 		String str = new String();
 		while(!mensaje.empty()) {
 			str = str + mensaje.pop();
@@ -107,6 +104,8 @@ public class Decodificar {
 		System.out.println("Mensaje a enviar: PROBLEMAS HIPER-INTERESANTES. Salida: " + codificar("PROBLEMAS HIPER-INTERESANTES."));
 		System.out.println();
 		System.out.println("Mensaje a enviar: URGENTE. VEA SI CONSIGUE COMPRAR OTRAS TRES BOTELLAS. Salida: " + codificar("URGENTE. VEA SI CONSIGUE COMPRAR OTRAS TRES BOTELLAS."));
+		System.out.println();
+		System.out.println("Mensaje a enviar: MENSAJE. Salida: " + codificar("MENSAJE"));
 
 
 	}
