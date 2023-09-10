@@ -263,26 +263,27 @@ public class UnidadMM {
 	}
     
     private PersonaAfectada[] afectadasVariasVeces(int indexE,int indexP, PersonaAfectada[] res) {
-    	if(indexE >= eventos.length) {
-    		if(res.length ==0) {
-    			return null;
-    		}
-    		return res;
-    	}
+
     	if(indexP >= eventos[indexE].getPersonasAfectadas().length) {
+    		if(indexE >= eventos.length-1) {
+        		if(res.length ==0) {
+        			return null;
+        		}
+        		return res;
+        	}
     		return afectadasVariasVeces(indexE+1, 0, res);
     	}
     	
     	PersonaAfectada[] as = eventos[indexE].getPersonasAfectadas();
-		for(PersonaAfectada a: as) {
-			if(alreadyIn(a, res) && isAffVarias(a)) {
-				res = Arrays.copyOf(res, res.length+1);
-				res[res.length-1] =a;
-			}
-			return afectadasVariasVeces(indexE, indexP+1, res);
+    	PersonaAfectada a = as[indexP];
+		
+		if(alreadyIn(a, res) && isAffVarias(a)) {
+			res = Arrays.copyOf(res, res.length+1);
+			res[res.length-1] =a;
 		}
 		
-		return afectadasVariasVeces(indexE+1, 0, res);
+		return afectadasVariasVeces(indexE, indexP+1, res);
+	
     	
   
     }
@@ -303,7 +304,7 @@ public class UnidadMM {
     	int indexE = 0;
     	int indexP =0;
    
-    	while(indexE < eventos.length && cont > 1) {
+    	while(indexE < eventos.length && cont <= 1) {
     		PersonaAfectada[] af = eventos[indexE].getPersonasAfectadas();
     		while(indexP < af.length) {
     			if(af[indexP].getID().equals(p.getID())) {
@@ -311,9 +312,10 @@ public class UnidadMM {
     			}
     			indexP++;
     		}
+    		indexP = 0;
     		indexE++;
     	}
-    	return (cont > 1)? false: true;
+    	return (cont > 1)? true: false;
     }
     
     
