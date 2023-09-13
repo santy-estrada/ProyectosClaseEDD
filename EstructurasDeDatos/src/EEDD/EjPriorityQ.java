@@ -50,11 +50,9 @@ class Inclusives implements Comparator<Persona>{
 	@Override
 	public int compare(Persona o1, Persona o2) {
 		// TODO Auto-generated method stub
-		if(o1.getImp() && o2.getImp()) {
-			return comparePregoEdadArrived(o2.getPrego(), o2.getEdad(), o2.getArrived(), o1.getPrego(), o1.getEdad(), o1.getArrived());
-		}else if(o1.getImp()) {
+		if(o1.getImp() && !o2.getImp()) {
 			return -1;
-		}else if(o2.getImp()) {
+		}else if(!o1.getImp() && o2.getImp()) {
 			return 1;
 		}else {
 			return comparePregoEdadArrived(o2.getPrego(), o2.getEdad(), o2.getArrived(), o1.getPrego(), o1.getEdad(), o1.getArrived());
@@ -63,11 +61,9 @@ class Inclusives implements Comparator<Persona>{
 	}
 	
 	private int comparePregoEdadArrived(boolean e, int edad2, int arrived2, boolean prego, int edad, int arrived) {
-		if(prego && e) {
-			return compareEdadArrived(edad2, arrived2, edad, arrived);
-		}else if(prego) {
+		if(prego && !e) {
 			return -1;
-		}else if(e) {
+		}else if(!prego && e) {
 			return 1;
 		}else {
 			return compareEdadArrived(edad2, arrived2, edad, arrived);
@@ -75,9 +71,7 @@ class Inclusives implements Comparator<Persona>{
 	}
 	
 	private int compareEdadArrived(int edad2, int arrived2, int edad, int arrived) {
-		if(edad > 60 && edad2 > 60) {
-			return -arrived2 + arrived;
-		}else if(edad > 60 || edad2 > 60) {
+		if((edad > 60 && edad2 <= 60) || (edad <= 60 && edad2 > 60)) {
 			return -edad + arrived2;
 		}else {
 			return -arrived2 + arrived;
