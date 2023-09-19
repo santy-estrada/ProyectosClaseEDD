@@ -98,7 +98,8 @@ public class ArbolB  <E extends Comparable<E>>{
 	private void inorden(NodoB<E> r) {
 		if(r != null) {
 			inorden(r.getHijoI());
-			System.out.print(r.getLlave() + " ");
+			//System.out.print(r.getLlave() + " ");
+			System.out.print(r + " ");
 			inorden(r.getHijoD());
 		}
 	}

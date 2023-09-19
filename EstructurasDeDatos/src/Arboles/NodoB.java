@@ -72,16 +72,23 @@ public class NodoB <E extends Comparable <E>>	{
 			return -1;
 		}
 		
-		int alturaI = 1 + altura(h.getHijoI());
-		int alturaD = 1 + altura(h.getHijoD());
+		int alturaI = (h.getHijoI() == null)? 0: 1 + altura(h.getHijoI());
+		int alturaD = (h.getHijoD() == null)? 0: 1 + altura(h.getHijoD());
 		
 		return Math.max(alturaI, alturaD);
 		
 	}
 	
+	public int FE() {
+		
+		return altura(this.getHijoD()) - altura(this.getHijoI());
+	}
+	
 	@Override
 	public String toString() {
-		return "NodoB [llave=" + llave + "]";
+		String HI = (hijoI == null)? "null": hijoI.getLlave().toString();
+		String HD = (hijoD == null)? "null":hijoD.getLlave().toString();
+		return llave.toString() + "(" + HI + "," + HD + ")";
 	}
 
 	
