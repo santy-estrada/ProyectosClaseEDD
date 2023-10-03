@@ -123,15 +123,39 @@ public class ArbolB  <E extends Comparable<E>>{
 		
 		return hojasD + hojasI;
 	}
+	
+	public int nIntermedios() {
+		
+		return nIntermedios(raiz);
+	}
+	
+	private int nIntermedios(NodoB<E> n) {
+		int interD, interI;
+		if(n == null || n.getHijoD() == null && n.getHijoI() == null) {
+			return 0;
+		}else if(n.getPadre() != null){
+			interD = 1 + nIntermedios(n.getHijoD());
+			interI = nIntermedios(n.getHijoI());
+		}else {
+			interD = nIntermedios(n.getHijoD());
+			interI = nIntermedios(n.getHijoI());
+		}
+		
+		
+		return interD + interI;
+		
+	}
+	
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		NodoB<Integer> n1 = new NodoB<Integer>(10);
-		NodoB<Integer> n2 = new NodoB<Integer>(7);
-		NodoB<Integer> n3 = new NodoB<Integer>(15);
-		NodoB<Integer> n4 = new NodoB<Integer>(5);
-		NodoB<Integer> n5 = new NodoB<Integer>(9);
-		NodoB<Integer> n6 = new NodoB<Integer>(12);
+		NodoB<Integer> n1 = new NodoB<Integer>(1);
+		NodoB<Integer> n2 = new NodoB<Integer>(2);
+		NodoB<Integer> n3 = new NodoB<Integer>(3);
+		NodoB<Integer> n4 = new NodoB<Integer>(4);
+		NodoB<Integer> n5 = new NodoB<Integer>(5);
+		NodoB<Integer> n6 = new NodoB<Integer>(6);
 		NodoB<Integer> n20 = new NodoB<Integer>(20);
 		
 		n3.setHijoI(n6);
@@ -143,6 +167,9 @@ public class ArbolB  <E extends Comparable<E>>{
 		
 		ArbolB<Integer> a = new ArbolB<Integer>(n1);
 		System.out.println("Número de hojas: " + a.nHojas());
+		System.out.println();
+		
+		System.out.println("Número de nodos intermedios: " + a.nIntermedios());
 		System.out.println();
 		
 		System.out.print("Preorden: ");

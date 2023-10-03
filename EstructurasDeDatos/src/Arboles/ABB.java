@@ -151,6 +151,7 @@ public class ABB <E extends Comparable <E>> extends ArbolB<E>{
 		}
 		
 		a.inorden();
+		System.out.println("Número de nodos intermedios: " + a.nIntermedios());
 		System.out.println(a.altura());
 		
 		try {
@@ -171,6 +172,7 @@ public class ABB <E extends Comparable <E>> extends ArbolB<E>{
 			System.out.println(e.getMessage());
 		}
 		a.inorden();
+		System.out.println("Número de nodos intermedios: " + a.nIntermedios());
 	}
 
 }

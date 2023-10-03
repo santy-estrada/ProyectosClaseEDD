@@ -134,9 +134,11 @@ public class AVL <E extends Comparable<E>> extends ABB<E>{
 			a.insertNodo(n14);
 			a.insertNodo(n13);
 			a.inorden();
+			System.out.println("Número de nodos intermedios: " + a.nIntermedios());
 			a.insertNodo(n5);
 			a.insertNodo(n7);
 			a.inorden();
+			System.out.println("Número de nodos intermedios: " + a.nIntermedios());
 			System.out.println("Eliminaciones:");
 			a.deleteNodo(8);
 			a.inorden();
