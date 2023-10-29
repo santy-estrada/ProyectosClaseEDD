@@ -2,6 +2,7 @@ package Grafos;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -39,7 +40,6 @@ public class Grafo <E extends Comparable<E>>{
 	
 	public Stack<Vertice<E>> MenorCaminoSinPesos(Vertice<E> inicio, Vertice<E> destino){
 		inicializarVertices();	//Inicializar los anteriores y distancias antes de recorrer el camino
-		//Recorrer a lo ancho todas las aristas con que tiene conexión.
 		
 		//Cola auxiliar
 		Queue<Vertice<E>> q = new LinkedList<Vertice<E>>();
@@ -66,6 +66,53 @@ public class Grafo <E extends Comparable<E>>{
 					siguiente.setAnterior(v);
 					//Pone la distancia como la distancia del vertica anterior + 1
 					siguiente.setDistance(v.getDistance()+1);
+					//Añade siguiente
+					q.add(siguiente);
+				}
+			}
+			//Saca el vértice que se está analizando para pasar con el siguiente
+			q.poll();
+		}
+		
+		Stack<Vertice<E>> camino = new Stack<Vertice<E>>();
+		Vertice<E> v = destino;
+		while(v != null) {
+			camino.push(v);
+			v = v.getAnterior();
+		}
+		
+		return camino;
+	}
+	
+	public Stack<Vertice<E>> MenorCaminoConPesos (Vertice<E> inicio, Vertice<E> destino){
+		inicializarVertices();	//Inicializar los anteriores y distancias antes de recorrer el camino
+
+		//Cola auxiliar con prioridad para distancias más cortas
+		PriorityQueue<Vertice<E>> q = new PriorityQueue<Vertice<E>>();
+		inicio.setDistance(0);
+		q.add(inicio);
+	
+		//Hasta que q esté vacío
+		while(!q.isEmpty()) {
+			//v es el primer valor de q
+			Vertice<E> v = q.peek();
+			//Lista con todos los adyacentes de v
+			LinkedList<Arista<E>> adyacentes = v.getAdyacentes();
+			ListIterator<Arista<E>> list = adyacentes.listIterator();
+			//Ciclo para revisar todos los adyacentes de v
+			while(list.hasNext()) {
+				//Arista que tiene el vértice adyacente
+				Arista<E> a = list.next();
+				//Vertice siguiente (adyacente en revisión)
+				Vertice<E> siguiente = a.getDestino();
+				
+				double distancia = v.getDistance()+a.getPeso();
+				//Añade el vertice adyacente si tiene otra distancia más corta
+				if(distancia < siguiente.getDistance()) {
+					//Pone el anterior como el vertice anterior analizado
+					siguiente.setAnterior(v);
+					//Pone la distancia como la distancia del vertica anterior + 1
+					siguiente.setDistance(distancia);
 					//Añade siguiente
 					q.add(siguiente);
 				}
@@ -166,7 +213,15 @@ public class Grafo <E extends Comparable<E>>{
 
 		 grafo.getVertices().add(v8);
 		 
-		 grafo.printCamino(grafo.MenorCaminoSinPesos(v1,v8));
+		 grafo.printCamino(grafo.MenorCaminoSinPesos(v1,v7));
+		 grafo.printCamino(grafo.MenorCaminoConPesos(v1,v7));
+		 
+		 grafo.printCamino(grafo.MenorCaminoSinPesos(v4,v7));
+		 grafo.printCamino(grafo.MenorCaminoConPesos(v4,v7));
+		 
+		 grafo.printCamino(grafo.MenorCaminoSinPesos(v1,v4));
+		 grafo.printCamino(grafo.MenorCaminoConPesos(v1,v4));
+
 
 	}
 
