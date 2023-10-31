@@ -87,7 +87,7 @@ public class Grafo <E extends Comparable<E>>{
 	public Stack<Vertice<E>> MenorCaminoConPesos (Vertice<E> inicio, Vertice<E> destino){
 		inicializarVertices();	//Inicializar los anteriores y distancias antes de recorrer el camino
 
-		//Cola auxiliar con prioridad para distancias más cortas
+		//Cola auxiliar con prioridad para distancias más cortas para actulizar menos nodos
 		PriorityQueue<Vertice<E>> q = new PriorityQueue<Vertice<E>>();
 		inicio.setDistance(0);
 		q.add(inicio);
@@ -113,8 +113,10 @@ public class Grafo <E extends Comparable<E>>{
 					siguiente.setAnterior(v);
 					//Pone la distancia como la distancia del vertica anterior + 1
 					siguiente.setDistance(distancia);
-					//Añade siguiente
-					q.add(siguiente);
+					//Añade siguiente si no estaba ya añadido
+					if(!q.contains(siguiente)) {
+						q.add(siguiente);
+					}
 				}
 			}
 			//Saca el vértice que se está analizando para pasar con el siguiente
