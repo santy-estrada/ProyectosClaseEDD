@@ -38,6 +38,65 @@ public class Grafo <E extends Comparable<E>>{
 		}
 	}
 	
+	public Vertice<E> searchVertex(E info){
+		Vertice<E> v = vertices.element();
+		ListIterator<Vertice<E>> l = vertices.listIterator();
+		while(l.hasNext() && v.getInfo().compareTo(info) != 0) {
+			v = l.next();
+		}
+		
+		return (v.getInfo().compareTo(info) != 0)? null: v;
+	}
+	
+	public Stack<Vertice<E>> MenorCaminoInmediatoSinPesos(Vertice<E> inicio, Vertice<E> destino){
+		inicializarVertices();	//Inicializar los anteriores y distancias antes de recorrer el camino
+		boolean flag = true;
+		//Cola auxiliar
+		Queue<Vertice<E>> q = new LinkedList<Vertice<E>>();
+		inicio.setDistance(0);
+		q.add(inicio);
+	
+		//Hasta que q esté vacío
+		while(!q.isEmpty() && flag) {
+			//v es el primer valor de q
+			Vertice<E> v = q.peek();
+			//Lista con todos los adyacentes de v
+			LinkedList<Arista<E>> adyacentes = v.getAdyacentes();
+			ListIterator<Arista<E>> list = adyacentes.listIterator();
+			//Ciclo para revisar todos los adyacentes de v
+			while(list.hasNext() && flag) {
+				//Arista que tiene el vértice adyacente
+				Arista<E> a = list.next();
+				//Vertice siguiente (adyacente en revisión)
+				Vertice<E> siguiente = a.getDestino();
+				
+				//Añade el vertice adyacente si no se ha visitado
+				if(siguiente.getAnterior() == null) {
+					//Pone el anterior como el vertice anterior analizado
+					siguiente.setAnterior(v);
+					//Pone la distancia como la distancia del vertica anterior + 1
+					siguiente.setDistance(v.getDistance()+1);
+					//Añade siguiente
+					q.add(siguiente);
+					
+					if(siguiente.equals(destino)) {
+						flag = false;
+					}
+				}
+			}
+			//Saca el vértice que se está analizando para pasar con el siguiente
+			q.poll();
+		}
+		
+		Stack<Vertice<E>> camino = new Stack<Vertice<E>>();
+		while(destino != null) {
+			camino.push(destino);
+			destino = destino.getAnterior();
+		}
+		
+		return camino;
+	}
+	
 	public Stack<Vertice<E>> MenorCaminoSinPesos(Vertice<E> inicio, Vertice<E> destino){
 		inicializarVertices();	//Inicializar los anteriores y distancias antes de recorrer el camino
 		
@@ -215,14 +274,22 @@ public class Grafo <E extends Comparable<E>>{
 
 		 grafo.getVertices().add(v8);
 		 
-		 grafo.printCamino(grafo.MenorCaminoSinPesos(v1,v7));
+		 grafo.printCamino(grafo.MenorCaminoSinPesos(grafo.searchVertex(1),grafo.searchVertex(7)));
+		 grafo.printCamino(grafo.MenorCaminoInmediatoSinPesos(v1,v7));
 		 grafo.printCamino(grafo.MenorCaminoConPesos(v1,v7));
 		 
+		 System.out.println();
+		 
 		 grafo.printCamino(grafo.MenorCaminoSinPesos(v4,v7));
+		 grafo.printCamino(grafo.MenorCaminoInmediatoSinPesos(v4,v7));
 		 grafo.printCamino(grafo.MenorCaminoConPesos(v4,v7));
 		 
+		 System.out.println();
+		 
 		 grafo.printCamino(grafo.MenorCaminoSinPesos(v1,v4));
+		 grafo.printCamino(grafo.MenorCaminoInmediatoSinPesos(v1,v4));
 		 grafo.printCamino(grafo.MenorCaminoConPesos(v1,v4));
+		 
 
 
 	}

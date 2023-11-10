@@ -18,6 +18,15 @@ public class Persona implements Comparable<Persona>{
 		orden++;
 	}
 	
+	public Persona(String nombre, int edad) {
+		this.edad = edad;
+		this.nombre = nombre;
+		this.prego = false;
+		this.imp = false;
+		this.arrived = orden;
+		orden++;
+	}
+	
 	public boolean getImp() {
 		return imp;
 	}
