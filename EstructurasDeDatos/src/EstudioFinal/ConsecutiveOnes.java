@@ -5,7 +5,28 @@ import java.util.*;
 public class ConsecutiveOnes {
     
     public int[] consecutive(int[][] matriz) {
-        // Complete el código
+    	return contador(matriz, 0, 0, 0, new int[matriz.length]);
+    }
+    
+    private int[] contador(int[][] matriz, int i, int j, int sec, int cant[]) {
+    	if(j == matriz[0].length) {
+    		if(i == matriz.length-1) {
+    			return cant;
+    		}
+    		return contador(matriz, i+1, 0, 0, cant);
+    	}
+    	
+    	if(matriz[i][j] == 1) {
+    		sec++;
+    	}if(matriz[i][j] != 1 || j == matriz[0].length-1) {
+    		if(sec > 1) {
+    			cant[i]++;
+    		}
+    		sec = 0;
+    		
+    	}
+    	
+    	return contador(matriz, i, j+1, sec, cant);
     }
     
     // Haga las funciones que necesite
@@ -26,5 +47,14 @@ public class ConsecutiveOnes {
             System.out.println(c);          
         in.close();
     }
-
+    /* 
+     *    
+4
+5
+0,0,1,0,0
+1,1,0,1,1
+0,1,1,1,1
+0,0,1,1,0
+     */
+ 
 }

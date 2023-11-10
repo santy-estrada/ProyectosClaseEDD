@@ -1,6 +1,7 @@
-package Estudio;
+package EstudioFinal;
 
 import java.util.*;
+
 
 public class ConstruccionFrases_Backtracking {
 	public static String permutaciones [] = new String [0];
@@ -67,8 +68,6 @@ public class ConstruccionFrases_Backtracking {
     private boolean valid(int[] sol, int p, String sentence) {
     	if(sol.length == 0) {
     		return true;
-    	}else {
-    		
     	}
     	
     	int index = 0;
