@@ -30,6 +30,9 @@ class Persona{
     public String getApellidos() {
         return apellidos;
     }
+    public int getEdad() {
+    	return edad;
+    }
 
     @Override
     public String toString() {
@@ -58,12 +61,28 @@ class Delito{
         return acusados;
     }
     
+    public Date getFecha() {
+    	return fecha;
+    }
+    
 	public boolean tieneMenores() {
 		int index = 0;
-		Date actual = new Date();
+		while(index < acusados.length && !(acusados[index].getAcusado().getEdad() < 18)) {
+			index++;
+		}
 		
 		
-		return true;
+		return index < acusados.length;
+	}
+	
+	public boolean tieneAsesinato() {
+		int index = 0;
+		while(index < acusados.length && !(acusados[index] instanceof Acusado_Asesinato)) {
+			index++;
+		}
+		
+		
+		return index < acusados.length;
 	}
     
     
@@ -109,8 +128,20 @@ class DelitoComparator implements Comparator<Delito> {
 
     @Override
     public int compare(Delito delito1, Delito delito2) {
+    	if(delito1.tieneMenores() && !delito2.tieneMenores()) {
+    		return -1;
+    	}else if(!delito1.tieneMenores() && delito2.tieneMenores()) {
+    		return 1;
+    	}else if (!delito1.tieneMenores() && !delito2.tieneMenores()){
+    		if(delito1.tieneAsesinato() && !delito2.tieneAsesinato()) {
+    			return -1;
+    		}else if(!delito1.tieneAsesinato() && delito2.tieneAsesinato()) {
+    			return 1;
+    		}
+    	}
+		return delito2.getFecha().compareTo(delito1.getFecha());
+		
         
-        return 0;
     }
 }  
 
@@ -178,14 +209,19 @@ public class CSI2 {
     		index++;
     	}
     	
-    	return index > list.size();
+    	return index == list.size();
     }
     
     
     
     //COMPLETAR
     public PriorityQueue<Delito> ordenDelitos() {
-        return null;
+    	PriorityQueue<Delito> orden = new PriorityQueue<Delito>(new DelitoComparator());
+		ListIterator<Delito> l = delitos.listIterator();
+		while(l.hasNext()) {
+			orden.add(l.next());
+		}
+        return orden;
     }
 
     public static void main(String[] args) {
@@ -232,13 +268,13 @@ public class CSI2 {
             if (asesinos!=null)
                 System.out.println(asesinos.toString());
             
-        }/*else {
+        }else {
             PriorityQueue<Delito> colaPrioridadDelitos= csi.ordenDelitos();
             while (colaPrioridadDelitos!=null && !colaPrioridadDelitos.isEmpty()) {
                 Delito delito = colaPrioridadDelitos.poll();
                 System.out.println("Delito: " + delito.codigo + ", Fecha: " + delito.fecha+", Menores: " + delito.tieneMenores()+", Asesinato: " +delito.tieneAsesinato());
             }
-        }*/
+        }
 
     }
 

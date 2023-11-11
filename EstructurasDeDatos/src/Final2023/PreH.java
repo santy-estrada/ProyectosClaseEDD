@@ -27,12 +27,9 @@ public class PreH {
     		aux = preorden[mid];
     	}
     	
-    	izq = 1 +altura(preorden, l, mid-1);
-    	if(mid != r) {
-        	der = 1 + altura(preorden, mid, r);
-    	}else if(preorden[r] != root){
-    		der+= 1;
-    	}
+    	izq = (aux < root)? 1 +altura(preorden, l, mid):1 +altura(preorden, l, mid-1) ;
+    	der = (aux < root)? 1 +altura(preorden, mid+1, r):1 +altura(preorden, mid, r);
+  
     
     	return Math.max(izq, der);
     }
