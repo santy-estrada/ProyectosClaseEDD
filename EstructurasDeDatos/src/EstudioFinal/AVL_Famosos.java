@@ -1,40 +1,51 @@
 package EstudioFinal;
-/*
+
 import java.util.*;
+/*
 
+class ExceptionNodo extends Exception{
+	public ExceptionNodo(String s){
+		super(s);
+	}
+}
 
-class Persona implements Comparable<Persona>{
+class Famoso implements Comparable<Famoso>{
     private String nombre;
-    private int edad;
-    private char sexo;// F para femenino y M para masculino
+    private int cantidad_seguidores;
+    private int publicaciones;
+    
+    public Famoso(String nombre, int cantidad_seguidores, int publicaciones) {
+        super();
+        this.nombre = nombre;
+        this.cantidad_seguidores = cantidad_seguidores;
+        this.publicaciones = publicaciones;
+    }
     public String getNombre() {
         return nombre;
     }
-    public int getEdad() {
-        return edad;
-    }    
-    public char getSexo() {
-        return sexo;
-    }
-    public Persona(String nombre, int edad, char sexo) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
-        this.edad = edad;
-        this.sexo=sexo;
+    }
+    public int getCantidad_seguidores() {
+        return cantidad_seguidores;
+    }
+    public void setCantidad_seguidores(int cantidad_seguidores) {
+        this.cantidad_seguidores = cantidad_seguidores;
+    }
+    public int getPublicaciones() {
+        return publicaciones;
+    }
+    public void setPublicaciones(int publicaciones) {
+        this.publicaciones = publicaciones;
     }
     @Override
     public String toString() {
-        return  nombre + ", "+ edad ;
+        return  nombre + ", "+ cantidad_seguidores ;
     }
     @Override
-    public int compareTo(Persona arg0) {
-        return (nombre.compareTo(arg0.getNombre())==0)?
-                edad-arg0.getEdad():nombre.compareTo(arg0.getNombre());
-    }
-}
-
-class ExceptionNodo extends Exception{
-    public ExceptionNodo(String s){
-        super(s);
+    public int compareTo(Famoso arg0) {
+        return (arg0.getCantidad_seguidores() == cantidad_seguidores)? 
+        		nombre.compareTo(arg0.getNombre()): cantidad_seguidores - arg0.getCantidad_seguidores();
     }
 }
 
@@ -144,7 +155,7 @@ class AVL<E extends Comparable<E>>{
             if (n.getLlave().compareTo(r.getLlave())>0)
                 r.setHijoDer(insert(n,r.getHijoDer()));
             if (n.getLlave().compareTo(r.getLlave())==0)
-                throw new ExceptionNodo("El nodo esta repetido");
+                throw new ExceptionNodo("El nodo es repetido");
         }
         return r;        
     }
@@ -208,60 +219,67 @@ class AVL<E extends Comparable<E>>{
 }
 
 
-public class AVL_Final {
+public class AVL_Famosos {
     
-    public ArrayList<Persona> buscarMujeres(AVL<Persona> arbolPersonas){
-    	Stack<Persona> asc = new Stack<Persona>();
-    	
-		return sol(ListInorden(arbolPersonas.getRaiz(), asc));
-	}
-    
-    private ArrayList<Persona> sol(Stack<Persona> asc){
-    	ArrayList<Persona> desc = new ArrayList();
-    	while (!asc.isEmpty()) {
-    		desc.add(asc.pop());
-    	}
-    	
-    	return desc;
+    public ArrayList<Famoso> mayoresSeguidores(int N, NodoB<Famoso> raiz) throws ExceptionNodo{
+        Stack<Famoso> famosos = new Stack<Famoso>();
+        famosos = ListInorden(raiz, famosos);
+        
+        ArrayList<Famoso> mayores = new ArrayList<Famoso>();
+        Famoso aux = famosos.peek();
+        while(!famosos.isEmpty() && aux.getCantidad_seguidores() > N) {
+        	mayores.add(famosos.pop());
+        	aux = famosos.peek();
+
+        }
+        
+        if(mayores.isEmpty()) {
+        	throw new ExceptionNodo("No hay famosos con esa cantidad de seguidores");
+        }
+        return mayores;
     }
-
-	private Stack<Persona> ListInorden(NodoB<Persona> r, Stack <Persona> asc) {
-		if(r != null) {
-			ListInorden(r.getHijoIzq(), asc);
-			if(r.getLlave().getSexo() == 'F') {
-				asc.push(r.getLlave());
-
-			}
-			ListInorden(r.getHijoDer(), asc);
-		}
-		return asc;
-	}
-	
-
     
-    //Haga las funciones que necesite
+	private Stack<Famoso> ListInorden(NodoB<Famoso> r, Stack <Famoso> sol) {
+		if(r != null) {
+			ListInorden(r.getHijoIzq(), sol);
+			sol.push(r.getLlave());
+			ListInorden(r.getHijoDer(), sol);
+		}
+		return sol;
+	}
+    
+    
+    
+   
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExceptionNodo {
+        // TODO Auto-generated method stub
         Scanner in = new Scanner(System.in);
-        String line;
-        AVL<Persona> arbol=new AVL<Persona>();
+        String line=in.nextLine();
+        int N=Integer.parseInt(line);
+        AVL<Famoso> arbol=new AVL<Famoso>();
         while ((line=in.nextLine()).compareTo("")!=0) {
-            String[] lineSplit=line.split(" ");
-            Persona p=new Persona(lineSplit[0], Integer.parseInt(lineSplit[1]),lineSplit[2].charAt(0));
-            NodoB<Persona> nodo=new NodoB<Persona>(p);
+            String[] lineSplit=line.split(",");
+            Famoso p=new Famoso(lineSplit[0], Integer.parseInt(lineSplit[1]),Integer.parseInt(lineSplit[2]));
+            NodoB<Famoso> nodo=new NodoB<Famoso>(p);
             try {
-                arbol.insertNodo(nodo);
-            } catch (ExceptionNodo e) {
-                System.out.println(e.getMessage());
+				arbol.insertNodo(nodo);
+			} catch (ExceptionNodo e) {
+				System.out.println(e.getMessage());
+			}
+        }
+        AVL_Famosos avl=new AVL_Famosos();
+        try {
+        	ArrayList<Famoso> a=avl.mayoresSeguidores(N, arbol.getRaiz());
+            ListIterator<Famoso> it= a.listIterator();
+            while(it.hasNext()) {
+                Famoso p= it.next();
+                System.out.println(p.getNombre()+ " "+ p.getCantidad_seguidores());
             }
-        }
-        AVL_Final avl=new AVL_Final();
-        ArrayList<Persona> a=avl.buscarMujeres(arbol);
-        ListIterator<Persona> it= a.listIterator();
-        while(it.hasNext()) {
-            Persona p= it.next();
-            System.out.println(p.getNombre()+ " "+ p.getEdad());
-        }
+        }catch (ExceptionNodo e) {
+			System.out.println(e.getMessage());
+		}
+        
 
         in.close();
     }
